@@ -1,0 +1,6 @@
+Compare the first three terms of an AP and a GP starting at 3 and 6
+Use the common difference to find the tenth term of the AP
+Use the common ratio to find the sixth term of the GP
+Find the sum of the first five terms in each sequence
+Recover the number of GP terms from a sum of 93
+Retest from memory with a first term of 2 and a common ratio of 3
