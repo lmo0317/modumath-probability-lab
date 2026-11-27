@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ml">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ബന്ധങ്ങൾ · Two relations on three numbers | ModuMath</title>
+<style>
+  * { box-sizing: border-box }
+  body { margin: 0 auto; max-width: 46rem; padding: 1.5rem; font: 1.06rem/1.65 system-ui, sans-serif; color: #172c32; background: #fff }
+  h1, h2 { line-height: 1.3 }
+  h1 { margin: .35rem 0 1rem }
+  h2 { margin: 1.6rem 0 .3rem; font-size: 1.25rem }
+  header p, footer { color: #415158 }
+  details { border-left: .22rem solid #137161; padding: .45rem 1rem; margin: .7rem 0 }
+  summary { color: #0b6056; font-weight: 650; cursor: pointer }
+  .pairs { overflow-wrap: anywhere; font-variant-numeric: tabular-nums }
+  footer { margin-top: 2rem; border-top: 1px solid #abbab9; padding: .8rem 0 }
+  a { color: #075c55 }
+  @media print { details > * { display: block } footer a { color: inherit } }
+</style>
+<main>
+<header>
+  <p lang="en">ModuMath · Kerala Plus Two maths practice</p>
+  <h1>മൂന്ന് സംഖ്യകൾ, രണ്ട് ബന്ധങ്ങൾ</h1>
+  <p>ഓരോ ബന്ധത്തിനും യോജിക്കുന്ന ക്രമജോടികൾ ആദ്യം കടലാസിൽ എഴുതുക. പിന്നെ ഉത്തരവുമായി താരതമ്യം ചെയ്യുക.</p>
+  <p lang="en">List the ordered pairs before opening the answer. An arrow from a to b represents the pair (a, b).</p>
+</header>
+<section>
+  <h2>1. ഏതാണ് ഹരിക്കുന്നത്? <span lang="en">Which number divides which?</span></h2>
+  <p>A = {1, 2, 4}. b എന്ന സംഖ്യയെ a കൊണ്ട് നിശ്ശേഷം ഹരിക്കാമെങ്കിൽ (a, b) എഴുതുക. ഉദാഹരണം: (2, 4). ബന്ധം പ്രതിസമമാണോ?</p>
+  <p lang="en">Include (a, b) if a divides b exactly. Is every arrow accompanied by an arrow in the opposite direction?</p>
+  <details><summary>ആറ് ജോടികൾ പരിശോധിക്കുക · Check the six pairs</summary>
+    <p class="pairs">(1, 1), (1, 2), (1, 4), (2, 2), (2, 4), (4, 4).</p>
+    <p lang="en">Each number divides itself, so the relation is reflexive. It is not symmetric: 2 divides 4, but 4 does not divide 2. It is transitive: whenever a divides b and b divides c, a divides c.</p>
+  </details>
+</section>
+<section>
+  <h2>2. ഒരേ ശിഷ്ടം <span lang="en">Same remainder</span></h2>
+  <p>B = {1, 2, 3}. a, b എന്നിവയെ 2 കൊണ്ട് ഹരിക്കുമ്പോൾ ഒരേ ശിഷ്ടം കിട്ടിയാൽ (a, b) എഴുതുക. ഇത്തവണ എല്ലാ അമ്പുകളും തിരിച്ചും വരയ്ക്കാമോ?</p>
+  <p lang="en">Now draw an arrow when the two numbers leave the same remainder on division by 2. Is this an equivalence relation?</p>
+  <details><summary>ഉത്തരം നോക്കുക · Check your answer</summary>
+    <p class="pairs">(1, 1), (1, 3), (2, 2), (3, 1), (3, 3).</p>
+    <p lang="en">Yes. A number has the same remainder as itself. If a and b match, b and a match. If a and b match and b and c match, all three have the same remainder. The two classes are {1, 3} and {2}.</p>
+  </details>
+</section>
+<section>
+  <h2>3. ഓർമ്മയിൽനിന്ന് ചെയ്യൂ · <span lang="en">Try again from memory</span></h2>
+  <p lang="en">Put 4 into set B. Without listing all the pairs, how many arrows have you added?</p>
+  <details><summary>സൂചനയും ഉത്തരവും · Hint and answer</summary>
+    <p lang="en">Before, the two classes had sizes 2 and 1, giving 2² + 1² = 5 pairs. Now both classes have size 2, giving 2² + 2² = 8. The three new arrows are (2, 4), (4, 2) and (4, 4).</p>
+  </details>
+</section>
+</main>
+<footer lang="en">Written by the ModuMath team. <a href="https://math.hjinlabs.com/?lang=en&amp;utm_source=kerala_planner_relations&amp;utm_medium=lesson&amp;utm_campaign=india_math#/?section=practice">Try a different worked algebra problem in English.</a></footer>
+</html>
