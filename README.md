@@ -7,6 +7,8 @@ comment:  A five-minute probability lesson about replacing a counter, with three
 
 # Two draws, one bag
 
+[অসমীয়া · A separate three-question activity on equivalent fractions](https://liascript.github.io/course/?https://raw.githubusercontent.com/lmo0317/modumath-probability-lab/main/as.md)
+
 [മലയാളം · Four tickets and two bus routes](https://liascript.github.io/course/?https://raw.githubusercontent.com/lmo0317/modumath-probability-lab/main/ml.md)
 
 [हिन्दी में पढ़ें · Read this lesson in Hindi](https://liascript.github.io/course/?https://raw.githubusercontent.com/lmo0317/modumath-probability-lab/main/hi.md)
