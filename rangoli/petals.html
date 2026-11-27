@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="hi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>कितनी पंखुड़ियाँ? · Rangoli maths | ModuMath</title>
+<style>
+* { box-sizing: border-box }
+body { margin:0; background:#fff9ec; color:#292439; font:17px/1.55 system-ui,sans-serif }
+main { width:min(800px,100%); margin:auto; padding:24px 18px 40px }
+h1 { font-size:clamp(30px,6vw,52px); line-height:1.15; margin:10px 0 4px }
+h2 { margin:0 0 8px; font-size:21px } p { margin:8px 0 16px }
+header { margin-bottom:22px } header p { margin-top:4px }
+.work { display:grid; grid-template-columns:minmax(180px,1fr) minmax(190px,1fr); gap:18px; align-items:center }
+svg { background:#201d35; border-radius:16px; width:100%; display:block }
+.controls { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 16px }
+button, select { padding:7px 12px; min-height:40px; border-radius:8px; border:1px solid #777487; color:#302d40; font:inherit; background:#fff }
+button { cursor:pointer } button[aria-pressed=true],button[type=submit] { color:white; background:#49345e }
+button:focus-visible,select:focus-visible,a:focus-visible { outline:3px solid #16755a; outline-offset:2px }
+output { display:block; margin-top:10px; min-height:3em } details { border-top:1px solid #bcb3a5; margin-top:20px; padding:14px 0 }
+summary {cursor:pointer;font-weight:650} footer {margin-top:20px} a {color:#603475}
+@media(max-width:560px){.work{grid-template-columns:1fr} svg{max-width:340px;margin:auto}}
+</style>
+<main>
+<header><h1>कितनी पंखुड़ियाँ?</h1><p lang="en">Count the petals · A rangoli-inspired geometry challenge</p></header>
+<section class="work" aria-label="Curve and prediction">
+<svg viewBox="-114 -114 228 228" role="img" aria-labelledby="curve-title">
+<title id="curve-title">वक्र का चित्र · Rose curve</title>
+<g fill="none" stroke="#57516f" stroke-width=".6"><circle r="94"/><path d="M-102 0H102 M0 -102V102"/></g>
+<path id="curve" fill="#704459" stroke="#ffcf80" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="0" cy="0" r="2.1" fill="white"/></svg>
+<div><h2>मान चुनें · Choose k</h2>
+<div id="values" class="controls" role="group" aria-label="Frequency k"></div>
+<p><b>r = cos(kθ)</b><br>चित्र में अलग-अलग पंखुड़ियाँ गिनें।<br><span lang="en">Count distinct petals, even if the pen traces one twice.</span></p>
+<form><label for="guess">आपका उत्तर · Your count</label><div class="controls"><select id="guess" required><option value="">—</option></select><button type="submit">जाँचें · Check</button></div>
+<output aria-live="polite" id="result"></output></form></div></section>
+<details><summary>कारण देखें · Why does parity matter?</summary>
+<p>जब θ आधा चक्कर बढ़ता है, दिशा उलट जाती है। विषम k के लिए r का चिह्न भी बदलता है, इसलिए रेखा उसी बिंदु पर लौटती है। सम k के लिए r का चिह्न वही रहता है और बिंदु केंद्र के दूसरी ओर बनता है।</p>
+<p lang="en">An extra half-turn reverses the direction of the radius. For odd k, the sign of cos(kθ) flips too, so the pen visits the same point again. For even k the sign stays the same, so the pen draws the opposite petal. For a positive integer k, the distinct count is k when k is odd and 2k when k is even.</p>
+</details>
+<details><summary>बिना चित्र के आज़माएँ · Try without a drawing</summary><p>k = 6 और k = 7 में किसके अधिक पंखुड़ियाँ होंगी? <span lang="en">Predict before checking.</span></p>
+<details><summary>उत्तर · Answer</summary><p>k = 6 पर 12, k = 7 पर 7। <span lang="en">The larger frequency does not always give more distinct petals.</span></p></details></details>
+<footer>ModuMath · <a lang="en" href="https://math.hjinlabs.com/?lang=en&amp;utm_source=codingtrain_rose_india&amp;utm_medium=lesson&amp;utm_campaign=india_math#/?section=practice">Try a different maths problem in English</a><br>
+<small lang="en">Inspired by <a href="https://thecodingtrain.com/challenges/55-mathematical-rose-patterns">Mathematical Rose Patterns, Coding Challenge 55</a>.</small></footer>
+</main>
+<script>
+const choices = document.querySelector('#values');
+const guess = document.querySelector('#guess');
+const feedback = document.querySelector('#result');
+let frequency = 3;
+for (let answer=1;answer<=10;answer++) guess.add(new Option(answer,answer));
+function show(k) {
+  frequency=k;
+  for (const b of choices.children) b.setAttribute('aria-pressed',String(Number(b.textContent)===k));
+  const points=[];
+  for (let step=0;step<=720;step++) {
+    const angle=2*Math.PI*step/720;
+    const radius=94*Math.cos(k*angle);
+    points.push((step?'L':'M')+(radius*Math.cos(angle)).toFixed(2)+' '+(-radius*Math.sin(angle)).toFixed(2));
+  }
+  document.querySelector('#curve').setAttribute('d',points.join(' ')+'Z');
+  document.querySelector('#curve').setAttribute('fill-rule','nonzero');
+  document.querySelector('#curve-title').textContent='Rose curve for k = '+k;
+  feedback.textContent=''; guess.value='';
+}
+for (const k of [2,3,4,5]) {
+  const b=document.createElement('button');b.type='button';b.textContent=k;
+  b.addEventListener('click',()=>show(k));choices.append(b);
+}
+document.querySelector('form').addEventListener('submit',event=>{
+  event.preventDefault(); const petals=frequency%2?frequency:2*frequency;
+  feedback.textContent=Number(guess.value)===petals
+    ? 'सही! '+petals+' अलग पंखुड़ियाँ। Correct — '+petals+' distinct petals.'
+    : 'फिर गिनें। एक सिरे से शुरू करें और घड़ी की दिशा में चलें। Try counting each outer tip once, clockwise.';
+});
+show(frequency);
+</script>
+</html>
