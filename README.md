@@ -7,6 +7,12 @@ comment:  A five-minute probability lesson about replacing a counter, with three
 
 # Two draws, one bag
 
+[বাংলা · Compare bus tickets with a weekly pass](https://liascript.github.io/course/?https://raw.githubusercontent.com/lmo0317/modumath-probability-lab/main/bn/fare-plans.md)
+
+[తెలుగు · Compare unit prices and the cost of buying eight notebooks](https://liascript.github.io/course/?https://raw.githubusercontent.com/lmo0317/modumath-probability-lab/main/te/notebook-packs.md)
+
+[हिन्दी · Find the journey time when a train crosses midnight](https://liascript.github.io/course/?https://raw.githubusercontent.com/lmo0317/modumath-probability-lab/main/hi/train-minutes.md)
+
 [অসমীয়া · A separate three-question activity on equivalent fractions](https://liascript.github.io/course/?https://raw.githubusercontent.com/lmo0317/modumath-probability-lab/main/as.md)
 
 [മലയാളം · Four tickets and two bus routes](https://liascript.github.io/course/?https://raw.githubusercontent.com/lmo0317/modumath-probability-lab/main/ml.md)
