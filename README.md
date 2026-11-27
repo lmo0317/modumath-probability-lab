@@ -7,6 +7,8 @@ comment:  A five-minute probability lesson about replacing a counter, with three
 
 # Two draws, one bag
 
+[हिन्दी में पढ़ें · Read this lesson in Hindi](https://liascript.github.io/course/?https://raw.githubusercontent.com/lmo0317/modumath-probability-lab/main/hi.md)
+
 A bag holds two blue counters and one yellow counter. You draw one without looking. Before you reach in again, someone asks: “What is the chance of blue now?”
 
 One detail is missing. Did the first counter go back in?
