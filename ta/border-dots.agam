@@ -1,0 +1,13 @@
+// Count the dots on the outside edge of a square array.
+// Valid side lengths are positive integers. A 1 x 1 array has one dot.
+செயல் ஓரம்(பக்கம்: எண்): எண் {
+    எனில் (பக்கம் == 1) {
+        விடை 1;
+    }
+    மாறி நடு: எண் = பக்கம் - 2;
+    விடை பக்கம் * பக்கம் - நடு * நடு;
+}
+
+செயல் மைய(): எண் {
+    விடை ஓரம்(7);
+}
