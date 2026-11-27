@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "Four number-line questions · संख्या रेखा",
+    "exam": "Original practice",
+    "language": "Hindi / English",
+    "durationMinutes": 15,
+    "totalQuestions": 4,
+    "totalMarks": 4,
+    "instructions": "Enter the number of integer solutions. Each question is worth one mark. Original practice by ModuMath.",
+    "createdAt": "2026-11-28T00:00:00+05:30"
+  },
+  "sections": [
+    {
+      "id": "math",
+      "name": "Number line",
+      "subject": "Mathematics"
+    }
+  ],
+  "questions": [
+    {
+      "id": "number-line-1",
+      "number": 1,
+      "section": "math",
+      "subject": "Mathematics",
+      "topic": "Absolute value",
+      "type": "nat",
+      "text": "कितने पूर्णांक x के लिए |2x − 1| < 7 है?\n\nHow many integers x satisfy |2x − 1| < 7?",
+      "answer": "6",
+      "marks": 1,
+      "negativeMarks": 0,
+      "hasDiagram": false,
+      "explanation": "−3 < x < 4. Count −2, −1, 0, 1, 2, 3. Neither endpoint belongs."
+    },
+    {
+      "id": "number-line-2",
+      "number": 2,
+      "section": "math",
+      "subject": "Mathematics",
+      "topic": "Absolute value",
+      "type": "nat",
+      "text": "अब |2x − 1| ≤ 7 के लिए कितने पूर्णांक x हैं?\n\nChange the sign to ≤. How many integers x satisfy |2x − 1| ≤ 7?",
+      "answer": "8",
+      "marks": 1,
+      "negativeMarks": 0,
+      "hasDiagram": false,
+      "explanation": "−3 ≤ x ≤ 4. Both endpoints now belong, giving two more integers."
+    },
+    {
+      "id": "number-line-3",
+      "number": 3,
+      "section": "math",
+      "subject": "Mathematics",
+      "topic": "Absolute value",
+      "type": "nat",
+      "text": "कितने पूर्णांक x के लिए |x − 1| + |x − 4| = 3 है?\n\nHow many integers x have a total distance of 3 from 1 and 4 on the number line?",
+      "answer": "4",
+      "marks": 1,
+      "negativeMarks": 0,
+      "hasDiagram": false,
+      "explanation": "Every point in [1, 4] has total distance 3. The integers are 1, 2, 3 and 4."
+    },
+    {
+      "id": "number-line-4",
+      "number": 4,
+      "section": "math",
+      "subject": "Mathematics",
+      "topic": "Absolute value",
+      "type": "nat",
+      "text": "यदि दूरियों का योग 5 हो, तो कितने पूर्णांक x मिलेंगे?\n\nNow count the integers satisfying |x − 1| + |x − 4| = 5.",
+      "answer": "2",
+      "marks": 1,
+      "negativeMarks": 0,
+      "hasDiagram": false,
+      "explanation": "Between the endpoints the sum is 3. Each unit outside increases the sum by 2. The two solutions are 0 and 5."
+    }
+  ]
+}
