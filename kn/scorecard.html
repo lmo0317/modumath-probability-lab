@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reading cricket overs · ಕನ್ನಡ + English · ModuMath</title>
+<style>
+* { box-sizing: border-box }
+body { margin:0; background:#f7f7ed; color:#182b24; font:1.02rem/1.6 system-ui,"Nirmala UI",sans-serif }
+main { max-width:43rem; padding:2rem 1.2rem 3rem; margin:auto }
+header { padding:.4rem 0 1rem; border-bottom:2px solid #294e39 }
+h1 { font-size:clamp(1.75rem,6vw,2.6rem); line-height:1.13; margin:.45rem 0 1rem }
+h2 { margin:.3rem 0; font-size:1.28rem }
+p { margin:.4rem 0 }
+small { font-size:.87rem; color:#455d4c }
+section { padding:1.1rem 0 1.3rem; border-bottom:1px solid #bfccbb }
+label { display:block; margin:.65rem 0 .25rem; font-weight:600 }
+input,button { padding:.55rem .8rem; min-height:44px; font:inherit; border-radius:.4rem }
+input { width:7rem; border:1px solid #667965; background:white }
+button { cursor:pointer; background:#285c40; border:1px solid #285c40; color:white }
+output { display:block; margin:.35rem 0; font-weight:650 }
+summary { padding:.35rem 0; cursor:pointer; color:#15563c }
+footer { margin:1.1rem 0 } a { color:#095c40 }
+:focus-visible { outline:3px solid #9d421d; outline-offset:3px }
+</style>
+<main>
+<header><small>ModuMath · Cricket maths · <span lang="kn">ಕ್ರಿಕೆಟ್ ಗಣಿತ</span></small>
+<h1>What comes after 2.5 overs?</h1>
+<p lang="kn">೨.೫ ಓವರ್‌ಗಳ ನಂತರ ಇನ್ನೊಂದು ಮಾನ್ಯ ಎಸೆತವಾದರೆ ಸ್ಕೋರ್‌ಬೋರ್ಡ್ ಏನು ತೋರಿಸುತ್ತದೆ?</p>
+<p>One over contains six valid deliveries. A wide or a no-ball does not add to that count. Try the three questions in order. You can enter 0–9 or ೦–೯.</p></header>
+<section><h2>From deliveries to the scoreboard</h2><p>17 valid balls have been bowled. Write the scorecard notation in overs.</p>
+<p lang="kn">೧೭ ಮಾನ್ಯ ಎಸೆತಗಳನ್ನು ಓವರ್‌ಗಳಲ್ಲಿ ಹೇಗೆ ಬರೆಯುತ್ತೀರಿ?</p>
+<form data-answer="2.5"><label for="seventeen">Overs · <span lang="kn">ಓವರ್‌ಗಳು</span></label><input id="seventeen" autocomplete="off" inputmode="decimal" required> <button>Check · <span lang="kn">ಪರಿಶೀಲಿಸಿ</span></button><output aria-live="polite"></output></form>
+<details><summary>See the working · <span lang="kn">ಲೆಕ್ಕ ನೋಡಿ</span></summary><p>17 = 2 × 6 + 5. The scorecard shows <strong>2.5</strong>. The final digit counts balls. As an ordinary number of overs, this is 2 + 5/6.</p></details></section>
+<section><h2>One more valid ball</h2><p>Starting from 2.5, one more valid ball is bowled. Write both parts of the new scorecard reading.</p>
+<p lang="kn">ಇನ್ನೊಂದು ಮಾನ್ಯ ಎಸೆತವಾದ ನಂತರ ಓವರ್‌ಗಳ ಸಂಖ್ಯೆ ಎಷ್ಟು?</p>
+<form data-answer="3.0"><label for="eighteen">Overs · <span lang="kn">ಓವರ್‌ಗಳು</span></label><input id="eighteen" autocomplete="off" inputmode="decimal" required> <button>Check · <span lang="kn">ಪರಿಶೀಲಿಸಿ</span></button><output aria-live="polite"></output></form>
+<details><summary>See the working · <span lang="kn">ಲೆಕ್ಕ ನೋಡಿ</span></summary><p>18 = 3 × 6 + 0. All six balls in the over are complete, so the display rolls over to <strong>3.0</strong>.</p></details></section>
+<section><h2>Read it backwards</h2><p>A different scorecard shows 7.2 overs. How many valid deliveries have been bowled?</p>
+<p lang="kn">೭.೨ ಓವರ್‌ಗಳಲ್ಲಿ ಎಷ್ಟು ಮಾನ್ಯ ಎಸೆತಗಳಿವೆ?</p>
+<form data-answer="44"><label for="reverse">Valid balls · <span lang="kn">ಮಾನ್ಯ ಎಸೆತಗಳು</span></label><input id="reverse" autocomplete="off" inputmode="numeric" required> <button>Check · <span lang="kn">ಪರಿಶೀಲಿಸಿ</span></button><output aria-live="polite"></output></form>
+<details><summary>See the working · <span lang="kn">ಲೆಕ್ಕ ನೋಡಿ</span></summary><p>Seven completed overs account for 42 valid balls. Add the two in the current over to get <strong>44</strong>.</p></details></section>
+<footer>Made by the ModuMath team. <a href="https://math.hjinlabs.com/?lang=en&amp;utm_source=bengaluru_scorecard&amp;utm_medium=resource&amp;utm_campaign=india_math#/?section=practice">Try a different worked maths problem in English</a>. The sample opens without signing in. Uploading your own problem requires an account.</footer>
+</main>
+<script>
+for (const form of document.querySelectorAll("form[data-answer]")) {
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    const input = form.querySelector("input");
+    const answer = input.value.trim().replace(/[೦-೯]/g, digit => String(digit.charCodeAt(0) - 0x0ce6));
+    const correct = answer === form.dataset.answer;
+    form.querySelector("output").textContent = correct
+      ? "Correct. · ಸರಿ."
+      : "Try again, or open the working below. · ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.";
+  });
+}
+</script>
+</html>
