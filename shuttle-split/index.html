@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A worked two-route example for first-year engineering maths: find eigenvalues, recover a steady split and check your prediction.">
+<title>Why two shuttle routes settle into a 2:1 split · ModuMath</title>
+<style>
+*{box-sizing:border-box}html{color:#172921;background:#f1f4ef;font:17px/1.5 'Segoe UI','Nirmala UI',sans-serif}body{max-width:48rem;background:white;margin:auto;padding:1.7rem 2.2rem}
+h1,h2{line-height:1.19}h1{font-family:Georgia,'Nirmala UI',serif;letter-spacing:-.02em;color:#184734;margin:.3em 0 .38em;font-size:2.25rem}h2{font-size:1.23rem;margin:1.15em 0 .25em;color:#194f39}
+p{margin:.45em 0}.course,footer{color:#485e50;font-size:.88em}.math{font:1.1em/1.5 Georgia,serif;background:#edf5ed;padding:.4em .7em;border-left:3px solid #61876a}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:.35em .45em;border-bottom:1px solid #b8c6b9}th{background:#f0f3eb}
+section+section{border-top:1px solid #b8c6b9;padding-top:1.3rem;margin-top:1.3rem}a{color:#165d44}
+footer{margin-top:1.1em;border-top:1px solid #a8b8ac;padding-top:.4em}label,input,button{font:inherit}input{width:6em;padding:.28em}button{padding:.32em .7em;border:0;background:#1e5b44;color:#fff;border-radius:.3em}button:focus-visible,input:focus-visible{outline:3px solid #916319}.task{padding-left:1.25em}.task li{margin:.5em 0}
+@media(max-width:580px){body{padding:1.1rem}h1{font-size:1.8rem}th,td{padding:.25em}table{font-size:.9em}}
+@page{size:A4;margin:16mm 18mm}
+@media print{html{font-size:11.4pt;color:#18241c;background:white}body{max-width:none;padding:0}h1{font-size:23pt}section+section{break-before:page;border:0;padding:0;margin:0}h2{margin:.9em 0 .25em}footer{font-size:9.3pt}.interactive{display:none}p,li,table{break-inside:avoid}a{text-decoration:underline}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+<main><section><header><div class="course">Engineering Mathematics I · Matrices and eigenvectors · ModuMath</div>
+<h1>Why two shuttle routes settle into a 2:1 split</h1></header>
+<p>A campus runs routes A and B. In a simplified weekday model, three quarters of yesterday’s A passengers return to A, while half of yesterday’s B passengers move to A. There are 768 regular passengers. To start, everyone uses A. Can you predict the counts two days later without multiplying out a matrix power?</p>
+<h2>Read each column as a starting route</h2>
+<table><thead><tr><th>Tomorrow</th><th>From A today</th><th>From B today</th></tr></thead><tbody><tr><td>Route A</td><td>3/4</td><td>1/2</td></tr><tr><td>Route B</td><td>1/4</td><td>1/2</td></tr></tbody></table>
+<p>Call this matrix M. Store counts in a column x = (A, B)<sup>T</sup>. Then x<sub>n+1</sub> = Mx<sub>n</sub>. Each column sums to 1, so tomorrow’s two expected counts still add to 768.</p>
+<p lang="hi"><strong>संकेत।</strong> पहले स्तंभ में उन यात्रियों को देखें जो आज A पर हैं। कल उनमें से 3/4 फिर A पर और 1/4 B पर होंगे।</p>
+<h2>Find the part that stays and the part that shrinks</h2>
+<p class="math">det(M − λI) = (3/4 − λ)(1/2 − λ) − 1/8 = (λ − 1)(λ − 1/4).</p>
+<p>For λ = 1, a vector that stays fixed is (2, 1)<sup>T</sup>. Its entries give a 2:1 split. With 768 passengers that means (512, 256)<sup>T</sup>. For λ = 1/4, multiply M by (1, −1)<sup>T</sup> to get (1/4, −1/4)<sup>T</sup>. This direction moves passengers between routes and preserves the total.</p>
+<h2>Predict day two</h2>
+<p>Day zero is (768, 0)<sup>T</sup> = (512, 256)<sup>T</sup> + 256(1, −1)<sup>T</sup>. After n weekdays, only the second part changes.</p>
+<p class="math">A<sub>n</sub> = 512 + 256(1/4)<sup>n</sup> &emsp; B<sub>n</sub> = 256 − 256(1/4)<sup>n</sup></p>
+<p>For n = 2 the remaining imbalance is 16. The expected counts are <b>528 on A and 240 on B</b>. As a check, day one is (576, 192). Then 3/4 × 576 + 1/2 × 192 = 528 on A.</p>
+<footer>Original worked example by ModuMath · Independent revision material · 1 / 2</footer></section>
+<section><header><div class="course">Engineering Mathematics I · Practice sheet</div><h1>Try a different starting split</h1></header>
+<p>Keep the same transfer matrix and the same 768 passengers. On day zero, 384 use each route. Draw two columns for A and B before starting the questions.</p>
+<ol class="task"><li>Where will the passengers be on day one? Check that your answer preserves the total.</li><li>Find the coefficient k in (384, 384)<sup>T</sup> = (512, 256)<sup>T</sup> + k(1, −1)<sup>T</sup>. Use it to predict day two.</li><li>What is the first whole day on which A is within two passengers of 512, counting a difference of exactly two?</li><li>If the number of passengers changed to 900 but the transfer fractions stayed the same, what stationary split would you expect?</li></ol>
+<p lang="hi"><b>खुद जाँचें।</b> यात्रियों की कुल संख्या नहीं बदलती। हर दिन A की संख्या और संतुलन वाली संख्या के बीच का अंतर पहले का एक चौथाई रह जाता है।</p>
+<h2>Worked answers</h2>
+<p><b>1.</b> A gets 3/4 × 384 + 1/2 × 384 = 480. B gets 96 + 192 = 288. The sum is 768.</p>
+<p><b>2.</b> k = 384 − 512 = −128. After two days the coefficient is −128/16 = −8. The counts are (504, 264).</p>
+<p><b>3.</b> The absolute differences on days 0, 1, 2 and 3 are 128, 32, 8 and 2. The first qualifying day is <b>day 3</b>.</p>
+<p><b>4.</b> The fixed vector still has ratio 2:1, so x = (600, 300)<sup>T</sup>. Multiplying by M returns the same pair.</p>
+<p><b>What would change in real life?</b> These are expected counts when passengers choose probabilistically. A fractional prediction later in the sequence is a mean over many possible days.</p>
+<div class="interactive"><h2>Check another prediction</h2><form id="calc"><label>Starting count on A <input type="number" id="start" min="0" max="768" step="1" value="384" required></label> <label>Day <input type="number" id="day" min="0" max="15" step="1" value="2" required></label> <button>Calculate</button></form><p id="result" aria-live="polite"></p></div>
+<footer>Maths, text and interactive example by ModuMath. <a href="https://lmo0317.github.io/modumath-probability-lab/shuttle-split/">Open the free calculator</a> · <a href="https://math.hjinlabs.com/?lang=en&amp;utm_source=shuttle_eigenvalues&amp;utm_medium=worksheet&amp;utm_campaign=india_math#/?section=practice">More practice on ModuMath</a> · 2 / 2</footer></section></main>
+<script>
+const showCounts=()=>{const start=document.getElementById('start').valueAsNumber,day=document.getElementById('day').valueAsNumber;const count=512+(start-512)*Math.pow(0.25,day);const fmt=x=>new Intl.NumberFormat('en-IN',{maximumFractionDigits:6}).format(x);document.getElementById('result').textContent='Day '+day+' expected counts: A = '+fmt(count)+', B = '+fmt(768-count)+'.';};
+document.getElementById('calc').addEventListener('submit',e=>{e.preventDefault();showCounts()});showCounts();
+</script></html>
