@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tiffin Trays · ModuMath</title>
+<style>
+  * { box-sizing: border-box; }
+  body { background: #faf7ef; color: #252b25; margin: 0; font: 1.05rem/1.55 system-ui, sans-serif; }
+  main { max-width: 46rem; padding: 1.2rem; margin: auto; }
+  h1 { margin: .75rem 0 .3rem; line-height: 1.15; font-size: clamp(2rem, 7vw, 3.4rem); }
+  label { display: block; margin: .4rem 0; }
+  button, select, input { font: inherit; color: inherit; border: 1px solid #596c58; border-radius: .45rem; padding: .45rem .7rem; background: white; }
+  input { width: 6rem; }
+  button { cursor: pointer; }
+  button[type=submit] { color: white; background: #25503b; }
+  :focus-visible { outline: 3px solid #0767b8; outline-offset: 3px; }
+  figure { margin: 1rem 0; }
+  #trays { display: grid; grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr)); gap: .4rem; }
+  .tray { display: grid; grid-template-columns: repeat(4,1fr); align-content: start; gap: .16rem; padding: .45rem; border: 2px solid #637569; border-radius: .65rem; min-height: 3rem; }
+  .piece { aspect-ratio: 1; border-radius: 55% 55% 48% 48%; background: #bb5528; border: 1px solid #793912; }
+  .gone { border: 1px dashed #724d45; background: transparent; }
+  .absent { border-style: dashed; }
+  figcaption, footer { margin: .5rem 0; font-size: .93rem; }
+  form { padding: 1rem; background: #f0eadd; border-radius: .65rem; }
+  #feedback { min-height: 1.7em; margin-top: .4em; }
+  footer { border-top: 1px solid #bcbeae; padding-top: .7rem; margin-top: 1.2rem; }
+  a { color: #145d43; }
+</style>
+<main>
+  <label>Language / भाषा <select id="language"><option value="en">English</option><option value="hi">हिन्दी</option></select></label>
+  <h1 id="title"></h1>
+  <p id="start"></p>
+  <label><span id="changeLabel"></span> <select id="case"></select></label>
+  <figure><div id="trays" aria-hidden="true"></div><figcaption id="caption"></figcaption></figure>
+  <form id="response">
+    <label for="answer" id="question"></label>
+    <input id="answer" type="number" inputmode="numeric" min="0" max="200" step="1" required>
+    <button type="submit" id="check"></button>
+    <div id="feedback" role="status"></div>
+  </form>
+  <p><button type="button" id="next"></button></p>
+  <footer><span id="credit"></span> · <a id="practice" href="https://math.hjinlabs.com/?lang=en&amp;utm_source=tiffin_trays&amp;utm_medium=learning_activity&amp;utm_campaign=india_math#/?section=practice"></a></footer>
+</main>
+<script>
+  const byId = id => document.getElementById(id);
+  const sets = [[7, 8], [4, 6], [6, 5], [3, 8], [5, 4]];
+  const copy = {
+    en: {
+      title: 'Tiffin Trays', start: (r, c) => `The canteen has ${r} trays with ${c} idlis on each. Before counting, decide what one group stands for.`,
+      change: 'What happens?', cases: ['Keep all the trays', 'Serve one whole tray', 'Serve one idli from every tray'],
+      figure: (r, c) => `Starting arrangement: ${r} trays, ${c} idlis per tray.`,
+      ask: 'How many idlis are left?', check: 'Check', next: 'Try another arrangement',
+      hint: ['Count equal groups, then multiply.', 'How many trays are still full?', 'How many idlis are still on each tray?'],
+      ok: 'Yes.', why: (r, c, t) => [`${r} groups of ${c}.`, `One whole group of ${c} is gone.`, `There are still ${r} trays. Each has one fewer idli.`][t],
+      credit: 'An activity by ModuMath', link: 'Try a maths problem in English'
+    },
+    hi: {
+      title: 'इडली की थालियाँ', start: (r, c) => `कैंटीन में ${r} थालियाँ हैं। हर थाली में ${c} इडलियाँ हैं। गिनने से पहले सोचिए कि यहाँ एक समूह क्या है।`,
+      change: 'अब क्या होता है?', cases: ['सभी थालियाँ रखी हैं', 'एक पूरी थाली परोस दी', 'हर थाली से एक इडली परोस दी'],
+      figure: (r, c) => `शुरुआत में ${r} थालियाँ थीं और हर थाली में ${c} इडलियाँ थीं।`,
+      ask: 'कितनी इडलियाँ बचीं?', check: 'जवाब जाँचें', next: 'अगला उदाहरण',
+      hint: ['बराबर समूहों को पहचानें, फिर गुणा करें।', 'अब कितनी थालियाँ भरी हैं?', 'अब हर थाली में कितनी इडलियाँ हैं?'],
+      ok: 'सही।', why: (r, c, t) => [`${c} इडलियों के ${r} समूह हैं।`, `${c} इडलियों की एक पूरी थाली परोस दी गई।`, `अब भी ${r} थालियाँ हैं। हर थाली में एक इडली कम है।`][t],
+      credit: 'ModuMath की सीखने की गतिविधि', link: 'अंग्रेज़ी में एक गणित का सवाल आज़माएँ'
+    }
+  };
+  let pair = 0;
+  const words = () => copy[byId('language').value];
+  function draw(reveal) {
+    const [rows, cols] = sets[pair];
+    const mode = Number(byId('case').value);
+    const trays = byId('trays');
+    trays.replaceChildren();
+    for (let row = 0; row < rows; row++) {
+      const tray = document.createElement('div');
+      const servedTray = reveal && mode === 1 && row === rows - 1;
+      tray.className = servedTray ? 'tray absent' : 'tray';
+      for (let col = 0; col < cols; col++) {
+        const piece = document.createElement('span');
+        const served = servedTray || (reveal && mode === 2 && col === cols - 1);
+        piece.className = served ? 'piece gone' : 'piece';
+        tray.append(piece);
+      }
+      trays.append(tray);
+    }
+  }
+  function reset() {
+    const w = words();
+    const [rows, cols] = sets[pair];
+    const selected = Number(byId('case').value);
+    document.documentElement.lang = byId('language').value;
+    byId('case').replaceChildren(...w.cases.map((s, i) => new Option(s, i)));
+    byId('case').value = selected;
+    const fields = { title: w.title, start: w.start(rows, cols), changeLabel: w.change, caption: w.figure(rows, cols), question: w.ask, check: w.check, next: w.next, credit: w.credit, practice: w.link };
+    for (const [id, value] of Object.entries(fields)) byId(id).textContent = value;
+    byId('answer').value = '';
+    byId('feedback').textContent = '';
+    draw(false);
+  }
+  byId('response').onsubmit = event => {
+    event.preventDefault();
+    const [rows, cols] = sets[pair];
+    const mode = Number(byId('case').value);
+    const groups = rows - Number(mode === 1);
+    const perGroup = cols - Number(mode === 2);
+    const total = groups * perGroup;
+    const correct = byId('answer').valueAsNumber === total;
+    const w = words();
+    byId('feedback').textContent = correct ? `${w.ok} ${groups} × ${perGroup} = ${total}. ${w.why(rows, cols, mode)}` : w.hint[mode];
+    draw(correct);
+  };
+  byId('case').onchange = reset;
+  byId('language').onchange = reset;
+  byId('next').onclick = () => { pair = (pair + 1) % sets.length; reset(); };
+  reset();
+</script>
+</html>
