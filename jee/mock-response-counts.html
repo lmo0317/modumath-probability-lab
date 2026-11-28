@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One score, three answer sheets · ModuMath</title>
+<style>
+*{box-sizing:border-box}body{font:18px/1.6 system-ui,sans-serif;color:#16342e;background:#f7f5ef;margin:auto;max-width:43rem;padding:1.3rem}h1,h2{line-height:1.2}h1{font-size:clamp(2.1rem,7vw,3.5rem)}h2{font-size:1.4rem}input,button{font:inherit;padding:.35rem .6rem}button{background:#164c41;color:white;border:0;border-radius:.3rem}label{display:block;margin-bottom:.5rem}input{width:6rem;border:1px solid #63746c;border-radius:.25rem}section,details{background:white;border:1px solid #c9d4cd;border-radius:.6rem;padding:1rem;margin:1rem 0}summary{cursor:pointer}a{color:#17564b}table{border-collapse:collapse;width:100%;margin:.7rem 0}th,td{border-bottom:1px solid #d5ddd6;padding:.3rem;text-align:center}caption{font-weight:bold}footer{margin:2rem 0}
+</style>
+<main>
+<h1>One score, three answer sheets</h1>
+<p lang="hi">एक ही अंक, तीन अलग उत्तर-पत्र। 25 सवाल हैं। सही जवाब पर 4 अंक मिलते हैं, गलत पर 1 अंक कटता है और खाली छोड़ने पर 0 अंक मिलते हैं।</p>
+<p>A mock has 25 questions. Each correct answer earns 4 marks, each wrong answer costs 1, and a blank earns 0. How could someone get 47? Write down one possibility before checking.</p>
+<section><h2>Try a score <span lang="hi">· अंक डालें</span></h2>
+<form id="form"><label for="score">Raw marks <span lang="hi">/ कुल अंक</span> (−25 to 100)</label>
+<input type="number" id="score" value="47" min="-25" max="100" step="1" required> <button>Show combinations</button></form>
+<output id="notice" aria-live="polite"></output>
+<table hidden id="answers"><caption>Possible answer sheets</caption><thead><tr><th scope="col">Correct<br><span lang="hi">सही</span></th><th scope="col">Wrong<br><span lang="hi">गलत</span></th><th scope="col">Blank<br><span lang="hi">खाली</span></th><th scope="col">Attempted<br><span lang="hi">हल किए</span></th></tr></thead><tbody></tbody></table>
+<noscript>For 47 marks the possible (correct, wrong, blank) triples are (12, 1, 12), (13, 5, 7), and (14, 9, 2).</noscript></section>
+<details><summary>47 marks from exactly 18 attempts <span lang="hi">· हल देखें</span></summary>
+<p>Let C be correct answers. Wrong answers then total 18 − C. The score is 4C − (18 − C) = 5C − 18. Setting that to 47 gives C = 13. Check: 13 × 4 − 5 = 47, and 7 are blank.</p>
+<p lang="hi">18 में से 13 सही और 5 गलत हैं। बाकी 7 सवाल खाली हैं। 18 प्रयासों पर 48 अंक क्यों नहीं बन सकते? क्योंकि (48 + 18) ÷ 5 पूर्णांक नहीं है।</p></details>
+<details><summary>What changes if you fix one mistake?</summary><p>Changing a wrong answer to a correct one moves from −1 to +4, a gain of 5. Filling a blank correctly gains 4. Starting at 47 the new totals would be 52 and 51 respectively.</p><p lang="hi">गलत से सही करने पर 5 अंक बढ़ते हैं। खाली से सही करने पर 4 अंक बढ़ते हैं।</p></details>
+<footer>By the ModuMath team. This is an invented practice example with ordinary questions. It uses no response-sheet link, bonus marks or percentile data. <a href="https://math.hjinlabs.com/?lang=en&amp;utm_source=jee_mock_score_counts&amp;utm_medium=lesson&amp;utm_campaign=india_math#/?section=practice">Try another maths problem in English</a>.</footer>
+</main>
+<script>
+function combinations(score) {
+  const rows = [];
+  for (let correct = 0; correct <= 25; correct++) {
+    const wrong = 4 * correct - score;
+    const blank = 25 - correct - wrong;
+    if (wrong >= 0 && blank >= 0) rows.push([correct, wrong, blank, correct + wrong]);
+  }
+  return rows;
+}
+document.getElementById('form').addEventListener('submit', event => {
+  event.preventDefault();
+  const score = document.getElementById('score').valueAsNumber;
+  const rows = combinations(score);
+  const table = document.getElementById('answers');
+  const body = table.tBodies[0];
+  body.replaceChildren();
+  for (const values of rows) {
+    const row = body.insertRow();
+    for (const value of values) row.insertCell().textContent = String(value);
+  }
+  table.hidden = rows.length === 0;
+  document.getElementById('notice').textContent = rows.length ? rows.length + ' possible answer sheet(s) for ' + score + ' marks.' : 'No combination gives ' + score + ' marks. ये अंक संभव नहीं हैं।';
+});
+</script></html>
