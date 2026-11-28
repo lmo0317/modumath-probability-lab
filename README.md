@@ -7,6 +7,8 @@ comment:  A five-minute probability lesson about replacing a counter, with three
 
 # Two draws, one bag
 
+[हिन्दी · दो छूट, दो आधार](https://lmo0317.github.io/modumath-probability-lab/hi/successive-discounts.html)
+
 [বাংলা · Compare bus tickets with a weekly pass](https://liascript.github.io/course/?https://raw.githubusercontent.com/lmo0317/modumath-probability-lab/main/bn/fare-plans.md)
 
 [తెలుగు · Compare unit prices and the cost of buying eight notebooks](https://liascript.github.io/course/?https://raw.githubusercontent.com/lmo0317/modumath-probability-lab/main/te/notebook-packs.md)
