@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How many free variables? · ModuMath</title>
+<style>
+:root{color-scheme:light;--ink:#172c3b;--blue:#124967;--muted:#415967;--line:#b9cad2}
+*{box-sizing:border-box}body{background:#eff4f6;color:var(--ink);font:16px/1.6 Inter,"Nirmala UI",system-ui,sans-serif;margin:0}main{max-width:840px;margin:26px auto;padding:30px 34px;background:white;border:1px solid var(--line);border-radius:12px}h1{font-size:clamp(26px,5vw,38px);line-height:1.16;margin:0 0 .55em}p{margin:.5em 0}header p{color:var(--muted)}fieldset{border:0;margin:14px 0;padding:0}legend{font-weight:700;margin-bottom:5px}.equations{background:#f0f6f8;border-left:4px solid var(--blue);padding:12px 16px;font-size:1.1em}.eq{font-family:Cambria,Georgia,serif;letter-spacing:.035em}.controls{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0}select,button{font:inherit;color:inherit}.controls select{min-width:78px;padding:5px 12px;border:1px solid #758e9c;border-radius:4px;background:white}.controls label{display:flex;align-items:center;gap:.5em}.answer{display:flex;align-items:baseline;gap:6px;padding:3px 0;cursor:pointer}input{accent-color:var(--blue)}button{background:var(--blue);color:white;border:0;border-radius:6px;padding:7px 17px;cursor:pointer}.feedback{font-weight:650}details{border-top:1px solid var(--line);padding-top:12px;margin:16px 0}summary{cursor:pointer;font-weight:bold}a{color:#134c75}footer{border-top:1px solid var(--line);font-size:.9em;padding-top:12px}button:focus-visible,a:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #c55211;outline-offset:3px}.tamil{color:var(--muted)}@media(max-width:600px){main{margin:0;padding:20px 16px;border:0;border-radius:0}}
+</style></head><body><main><header><h1>How many free variables?</h1>
+<p lang="ta">இந்தச் சமன்பாடுகளுக்கு எத்தனை மாறிகளின் மதிப்புகளை விருப்பப்படி தேர்ந்தெடுக்கலாம்?</p>
+<p>Change <i>k</i> and <i>d</i>, then predict the shape of the solution set in three dimensions.</p></header>
+<div class="equations" aria-label="System of equations"><div class="eq">x + y + z = 4</div><div class="eq" id="row-two">2x + 2y + 2z = 8</div></div>
+<div class="controls">
+<label for="k">k <select id="k"><option>−2</option><option>−1</option><option selected>0</option><option>1</option><option>2</option></select></label>
+<label for="d">d <select id="d"><option>−2</option><option>−1</option><option selected>0</option><option>1</option><option>2</option></select></label>
+</div>
+<p>The second row is <span class="eq">2x + 2y + (2 + k)z = 8 + d</span>.</p>
+<form id="guess"><fieldset><legend>What do the two planes share?</legend>
+<label class="answer"><input type="radio" name="shape" value="empty" required> No points · <span lang="ta">பொதுப்புள்ளி இல்லை</span></label>
+<label class="answer"><input type="radio" name="shape" value="line"> A line · <span lang="ta">ஒரு நேர்கோடு</span></label>
+<label class="answer"><input type="radio" name="shape" value="plane"> A whole plane · <span lang="ta">ஒரு முழுத் தளம்</span></label>
+</fieldset><button type="submit">Check / <span lang="ta">சரிபார்</span></button></form>
+<p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+<details id="work"><summary>Show the row operation · <span lang="ta">கணக்கைப் பார்</span></summary>
+<p>Subtract twice the first row from the second. The last row becomes <strong class="eq" id="last-row"></strong>.</p><p id="reason"></p><p id="tamil" class="tamil" lang="ta"></p><p id="rank"></p>
+</details><footer>ModuMath · Independent practice for learners of linear algebra. <a href="https://math.hjinlabs.com/?lang=en&amp;utm_source=india_rank_lab&amp;utm_medium=resource&amp;utm_campaign=india_math#/?section=practice">Try a worked maths problem in English</a>.</footer>
+<script>
+const kInput=document.getElementById('k'),dInput=document.getElementById('d');
+const guess=document.getElementById('guess'),feedback=document.getElementById('feedback'),work=document.getElementById('work');
+function numberOf(select){return Number(select.value.replace('−','-'));}
+function shapeOf(k,d){if(k!==0)return 'line';return d===0?'plane':'empty';}
+function render(){
+ const k=numberOf(kInput),d=numberOf(dInput),c=2+k;
+ document.getElementById('row-two').textContent='2x + 2y'+(c===0?'':c===1?' + z':' + '+c+'z')+' = '+(8+d);
+ document.getElementById('last-row').textContent=k===0?'0 = '+d:(k===1?'z':k===-1?'−z':k+'z')+' = '+d;
+ const shape=shapeOf(k,d);
+ const point=k===0?null:d/k;
+ const cases={
+ line:['The last row fixes z at '+point+'. Choose any x, then the first row fixes y. One free variable gives a line.','z-இன் மதிப்பு நிர்ணயிக்கப்படுகிறது. x-ஐத் தேர்ந்தெடுத்தால் y-இன் மதிப்பும் தீர்மானமாகிறது.','rank(A) = rank([A|b]) = 2. Nullity of A = 3 − 2 = 1.'],
+ plane:['The last row gives no new condition. Choose any x and y. Then z = 4 − x − y. Both equations describe the same plane.','இரண்டாவது வரி புதிய நிபந்தனையைச் சேர்க்கவில்லை. x, y இரண்டையும் தேர்ந்தெடுக்கலாம்.','rank(A) = rank([A|b]) = 1. Nullity of A = 3 − 1 = 2.'],
+ empty:['The last row is a contradiction. The planes are parallel and distinct, so no point satisfies both equations.','கடைசி வரியில் முரண்பாடு உள்ளது. இரு தளங்களுக்கும் பொதுப்புள்ளி இல்லை.','rank(A) = 1 and rank([A|b]) = 2. The coefficient matrix still has nullity 2, while the given system has no solution.']};
+ const [why,ta,rank]=cases[shape];
+ document.getElementById('reason').textContent=why;document.getElementById('tamil').textContent=ta;document.getElementById('rank').textContent=rank;
+ feedback.textContent='';guess.reset();work.open=false;
+}
+guess.addEventListener('submit',function(event){event.preventDefault();const value=new FormData(guess).get('shape');feedback.textContent=value===shapeOf(numberOf(kInput),numberOf(dInput))?'Correct. Open the row operation to see why.':'Try again. Compare the last row with a statement of the form 0 = d.';});
+kInput.addEventListener('change',render);dInput.addEventListener('change',render);render();
+</script></main></body></html>
