@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rupee Recount · हर दिन का हिसाब | ModuMath</title>
+<meta name="description" content="Solve a new rupee-note puzzle each day. Use a total, a number of notes and one clue. Free in English and Hindi.">
+<style>
+*{box-sizing:border-box}body{margin:0 auto;max-width:39rem;padding:1.2rem;color:#2b231d;background:#faf4e9;font:1.06rem/1.55 system-ui,sans-serif}header,footer{display:flex;align-items:center;justify-content:space-between;gap:1rem;color:#5c4535}header{border-bottom:2px solid #ab501e;padding-bottom:.65rem}h1{font: bold clamp(2.5rem,8vw,4rem)/1.08 Georgia,serif;margin:1.4rem 0 .25rem;color:#4b3026}button,input,select{font:inherit}button,select{padding:.45rem .7rem;border-radius:.35rem;border:1px solid #92694d;background:#fffaf0;color:#362b23}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #096755}section{background:#fffcf5;border:1px solid #c7ac89;border-radius:.7rem;padding:1rem;margin:1rem 0}#facts{font-weight:650}#clue{border-left:.25rem solid #ae551f;padding-left:.8rem}form>div{display:flex;gap:.6rem;flex-wrap:wrap}label{font-weight:600}input{display:block;width:5.4rem;padding:.45rem;border:1px solid #916c4d;border-radius:.2rem;margin:.2rem 0 .8rem}#check{background:#205748;color:white;border:0}#result{min-height:1.5em;color:#204d40;font-weight:650}summary{cursor:pointer}footer{margin:1.2rem 0;flex-wrap:wrap;font-size:.9rem}a{color:#19584a}
+</style>
+<header><strong>ModuMath</strong><select id="language" aria-label="Language / भाषा"><option value="en">English</option><option value="hi">हिन्दी</option></select></header>
+<main><h1 id="title"></h1><p id="date"></p><section><p id="facts"></p><p id="clue"></p>
+<form id="answer"><div><label>₹10<input id="ten" type="number" min="0" step="1" inputmode="numeric" required></label><label>₹20<input id="twenty" type="number" min="0" step="1" inputmode="numeric" required></label><label>₹50<input id="fifty" type="number" min="0" step="1" inputmode="numeric" required></label></div><button id="check"></button></form><p id="result" aria-live="polite"></p></section>
+<details id="help"><summary id="hintTitle"></summary><p id="hint"></p></details>
+<details id="solution"><summary id="solutionTitle"></summary><p id="worked"></p></details></main>
+<footer><span id="reset"></span><a id="app" href="https://math.hjinlabs.com/?lang=en&amp;utm_source=rupee_recount&amp;utm_medium=game&amp;utm_campaign=india_math#/?section=practice"></a></footer>
+<script>
+'use strict';
+const byId = id => document.getElementById(id);
+const labels = {
+  en: {title:'Rupee Recount', facts:(n,v)=>`A stallholder counts ${n} notes worth ₹${v} in total. How many ₹10, ₹20 and ₹50 notes are in the till?`, hintTitle:'Get a hint', solutionTitle:'Show the worked answer', check:'Check my counts', hint:(n,v)=>`Imagine all ${n} notes were ₹10. The remaining ₹${v-10*n} comes from replacing some of them with ₹20 or ₹50 notes. Each replacement adds ₹10 or ₹40. Try the possible numbers of ₹50 notes, then apply the clue.`, worked:(a,b,c,n,v)=>`There are ${a} tens, ${b} twenties and ${c} fifties. ${a} + ${b} + ${c} = ${n} notes. ₹${10*a} + ₹${20*b} + ₹${50*c} = ₹${v}.`, feedback:(n,v)=>`Your counts give ${n} notes worth ₹${v}. Check the two totals and the clue.`,win:'That fits both totals and the clue!', reset:'New puzzle at midnight in India.', app:'Try another maths problem on ModuMath'},
+  hi: {title:'हर दिन का हिसाब', facts:(n,v)=>`एक दुकानदार के पास कुल ${n} नोट हैं, जिनका कुल मूल्य ₹${v} है। इनमें ₹10, ₹20 और ₹50 के कितने-कितने नोट हैं?`,hintTitle:'संकेत देखें',solutionTitle:'हल देखें',check:'जवाब जाँचें',hint:(n,v)=>`मान लीजिए कि सभी ${n} नोट ₹10 के हैं। असली रकम इससे ₹${v-10*n} ज़्यादा है। ₹10 के एक नोट की जगह ₹20 या ₹50 का नोट रखने से रकम ₹10 या ₹40 बढ़ती है। ₹50 के नोटों की अलग-अलग संख्याएँ आज़माएँ और सुराग देखें।`,worked:(a,b,c,n,v)=>`₹10 के ${a}, ₹20 के ${b} और ₹50 के ${c} नोट हैं। कुल ${a} + ${b} + ${c} = ${n} नोट। कुल रकम ₹${10*a} + ₹${20*b} + ₹${50*c} = ₹${v}।`,feedback:(n,v)=>`आपके हिसाब में ${n} नोट हैं और कुल रकम ₹${v} है। दोनों जोड़ और सुराग फिर देखें।`,win:'सही! दोनों जोड़ और सुराग मेल खाते हैं।',reset:'भारत में आधी रात को नई पहेली आती है।',app:'ModuMath पर एक और गणित का सवाल हल करें'}
+};
+const clues = [
+  [([a,b])=>a===b,'There are as many ₹10 notes as ₹20 notes.','₹10 और ₹20 के नोट बराबर संख्या में हैं।'],
+  [([,b,c])=>b===2*c,'There are twice as many ₹20 notes as ₹50 notes.','₹20 के नोटों की संख्या ₹50 के नोटों की संख्या की दुगुनी है।'],
+  [([a,,c])=>a===c+1,'There is one more ₹10 note than ₹50 notes.','₹10 के नोटों की संख्या ₹50 के नोटों से एक ज़्यादा है।'],
+  [([a,b])=>a===2*b,'There are twice as many ₹10 notes as ₹20 notes.','₹10 के नोटों की संख्या ₹20 के नोटों की संख्या की दुगुनी है।'],
+  [([a,b])=>b===a+2,'There are two more ₹20 notes than ₹10 notes.','₹20 के नोटों की संख्या ₹10 के नोटों से दो ज़्यादा है।'],
+  [([,b,c])=>b+c===5,'Five of the notes are worth ₹20 or ₹50.','₹20 और ₹50 के नोट मिलाकर पाँच हैं।'],
+  [([a,,c])=>a+c===7,'Seven of the notes are worth ₹10 or ₹50.','₹10 और ₹50 के नोट मिलाकर सात हैं।']
+];
+const bank = [];
+for (let n=6;n<=21;n++) {
+  const byValue = new Map();
+  for (let a=0;a<=n;a++) for (let b=0;b<=n-a;b++) {
+    const c=n-a-b,v=10*a+20*b+50*c;
+    if (!byValue.has(v)) byValue.set(v,[]);
+    byValue.get(v).push([a,b,c]);
+  }
+  for (const [v,ways] of byValue) {
+    if (ways.length<2) continue;
+    for (const clue of clues) {
+      const valid=ways.filter(clue[0]);
+      if (valid.length===1 && valid[0].every(x=>x>0)) bank.push({n,v,clue,counts:valid[0]});
+    }
+  }
+}
+// Stable shuffle keeps successive dates varied. Times are Indian Standard Time.
+let seed=1729;
+for(let i=bank.length-1;i>0;i--){seed=(Math.imul(seed,1664525)+1013904223)>>>0;const j=seed%(i+1);[bank[i],bank[j]]=[bank[j],bank[i]];}
+const dayIndex=()=>Math.floor((Date.now()+19800000)/86400000);
+let day=dayIndex(), puzzle=bank[day%bank.length], language=navigator.language.startsWith('hi')?'hi':'en',attempt=null;
+function render(){
+  const {n,v,clue,counts}=puzzle,t=labels[language];document.documentElement.lang=language;
+  byId('language').value=language;
+  byId('date').textContent=new Intl.DateTimeFormat(language==='hi'?'hi-IN':'en-IN',{dateStyle:'long',timeZone:'UTC'}).format(new Date(day*86400000));
+  for(const id of ['title','hintTitle','solutionTitle','check','reset','app'])byId(id).textContent=t[id];
+  byId('facts').textContent=t.facts(n,v);byId('clue').textContent=clue[language==='hi'?2:1];byId('hint').textContent=t.hint(n,v);byId('worked').textContent=t.worked(...counts,n,v);
+  byId('result').textContent=attempt===null?'':counts.every((x,i)=>x===attempt[i])?t.win:t.feedback(attempt[0]+attempt[1]+attempt[2],10*attempt[0]+20*attempt[1]+50*attempt[2]);
+}
+byId('language').onchange=e=>{language=e.target.value;render();};
+function refreshDay(){const now=dayIndex();if(day===now)return false;day=now;puzzle=bank[day%bank.length];attempt=null;byId('answer').reset();byId('solution').open=false;byId('help').open=false;render();return true;}
+byId('answer').onsubmit=e=>{e.preventDefault();if(refreshDay())return;attempt=['ten','twenty','fifty'].map(id=>byId(id).valueAsNumber);render();};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshDay();});setInterval(refreshDay,15000);render();
+</script></html>
