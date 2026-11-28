@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="hi">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>दो छूट, दो आधार · ModuMath</title>
+<style>
+*{box-sizing:border-box}body{background:#fcfaf4;color:#1c302e;font:1.08rem/1.65 system-ui,"Nirmala UI",sans-serif;margin:0}main{max-width:46rem;margin:auto;padding:2rem 1.2rem}h1{line-height:1.25}h2{font-size:1.25rem;margin-bottom:.3rem}section{padding:.3rem 0 1.2rem;border-bottom:1px solid #c7cfc4}p{margin:.4rem 0}summary,a{color:#165d58}summary{cursor:pointer;font-weight:650;min-height:2.4rem}pre{background:#e6eee7;padding:1rem;overflow:auto}footer{margin-top:1rem}a:focus-visible,summary:focus-visible{outline:3px solid #b95409}
+</style>
+<main><p>ModuMath · प्रतिशत</p><h1>दो छूट, दो आधार</h1>
+<p>पहले कागज़ पर हल करें। हर बार बताएं कि प्रतिशत <strong>किस कीमत का</strong> है।</p>
+<section><h2>1. ₹500 की किताबें</h2><p>पहले 20% छूट है। उसके बाद बची हुई कीमत पर 10% छूट है। कितने रुपये देने होंगे?</p>
+<details><summary>उत्तर और कारण</summary><p>पहली छूट ₹100 है। बाकी ₹400 पर दूसरी छूट ₹40 है। देय राशि ₹360 है। कुल छूट ₹140 यानी मूल कीमत का 28% है।</p></details></section>
+<section><h2>2. कीमत बदलें</h2><p>₹800 के बैग पर पहले 25%, फिर बची हुई कीमत पर 10% छूट है। दोनों छूटों में कितने रुपये बचे?</p>
+<details><summary>उत्तर और कारण</summary><p>₹200 की पहली छूट के बाद ₹600 बचते हैं। दूसरी छूट ₹60 है। कुल बचत ₹260 है और देय राशि ₹540 है।</p></details></section>
+<section><h2>3. उलटा सवाल</h2><p>20% और फिर 10% की छूट के बाद बिल ₹432 है। दोनों छूटों से पहले कीमत कितनी थी?</p>
+<details><summary>उत्तर और कारण</summary><p>अंतिम बिल मूल कीमत का 0.8 × 0.9 = 0.72 गुना है। मूल कीमत ₹432 ÷ 0.72 = ₹600 है। जाँचें: ₹600 → ₹480 → ₹432।</p></details></section>
+<section><h2>Kalaam में जाँचें</h2><p>पहले सवाल का कोड नीचे है। दूसरे सवाल के लिए कीमत को 800 और पहली दर को 25 करें।</p><pre><code>कीमत=500
+पहलीदर=20
+दूसरीदर=10
+
+पहलीछूट=कीमत*पहलीदर/100
+बाकी=कीमत-पहलीछूट
+दूसरीछूट=बाकी*दूसरीदर/100
+देयराशि=बाकी-दूसरीछूट
+
+दिखाए(देयराशि)</code></pre></section>
+<footer><a lang="en" href="https://math.hjinlabs.com/?lang=en&amp;utm_source=kalaam_discounts&amp;utm_medium=resource&amp;utm_campaign=india_math#/?section=practice">Try a different worked problem in ModuMath (English)</a></footer></main></html>
